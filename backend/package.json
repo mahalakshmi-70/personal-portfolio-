@@ -1,0 +1,21 @@
+{
+  "name": "html-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "..\\.venv\\Scripts\\python.exe app.py",
+    "start:official": "..\\.venv\\Scripts\\python.exe app.py",
+    "test": "..\\.venv\\Scripts\\python.exe -m unittest discover -s . -p test_app.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.9",
+    "express": "^5.1.0",
+    "nodemailer": "^10.2.1"
+  }
+}

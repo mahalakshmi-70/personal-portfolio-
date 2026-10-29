@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Mahalakshmi Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="brand" href="index.html">Golamari Mahalakshmi<span>.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About me</a>
+            <a href="education.html">Education</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <section class="contact-layout">
+            <div class="contact-intro">
+                <p class="eyebrow">FIRST-TIME SETUP</p>
+                <h1>Set up<br>your admin.</h1>
+                <p class="contact-lead">Create the initial admin account to securely review portfolio messages.</p>
+            </div>
+
+            <section class="contact-form-card">
+                <form id="registerForm">
+                    <label for="regName">Username</label>
+                    <input type="text" id="regName" name="name" required>
+                    
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" required>
+                    
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="password" required>
+
+                    <label for="setupKey">Admin setup key (if configured)</label>
+                    <input type="password" id="setupKey" name="setupKey" autocomplete="off">
+                    
+                    <button type="submit">Create Account</button>
+                    <p id="registerResult" aria-live="polite"></p>
+                    <p id="registerInfo" aria-live="polite"></p>
+                </form>
+                <p><a href="login.html">Return to admin sign in</a></p>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>&copy; <span data-current-year>2026</span> Mahalakshmi&nbsp; | My Portfolio</p>
+        </div>
+    </footer>
+
+</body>
+</html>

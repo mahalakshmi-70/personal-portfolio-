@@ -1,0 +1,15 @@
+# Python
+venv/
+.venv*/
+node_modules/
+.env
+__pycache__/
+*.pyc
+*.pyd
+*.egg-info/
+backend/data/
+backend/data-personal/
+
+# OS
+.DS_Store
+Thumbs.db

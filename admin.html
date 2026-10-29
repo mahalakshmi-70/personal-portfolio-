@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Mahalakshmi Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="brand" href="index.html">Golamari Mahalakshmi<span>.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About me</a>
+            <a href="education.html">Education</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="adminDashboard">
+            <p class="eyebrow">ADMIN</p>
+            <h1>Contact messages</h1>
+            <p>Messages submitted through the portfolio contact form.</p>
+            <div class="hero-actions">
+                <button class="btn" id="logoutButton" type="button">Log out</button>
+            </div>
+            <p id="adminStatus" role="status" aria-live="polite">Loading messages...</p>
+            <div id="messageList" class="card-container" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>&copy; <span data-current-year>2026</span> Mahalakshmi&nbsp; | My Portfolio</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mahalakshmi Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="brand" href="index.html">Golamari Mahalakshmi<span>.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About me</a>
+            <a href="education.html">Education</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <section class="contact-layout">
+            <div class="contact-intro">
+                <p class="eyebrow">PRIVATE AREA</p>
+                <h1>Admin<br>sign in.</h1>
+                <p class="contact-lead">Sign in to review messages sent through the portfolio contact form.</p>
+            </div>
+
+            <section class="contact-form-card">
+                <form id="loginForm">
+                    <label for="loginUser">Username</label>
+                    <input type="text" id="loginUser" name="username" required>
+                    
+                    <label for="loginPass">Password</label>
+                    <input type="password" id="loginPass" name="password" required>
+                    
+                    <button type="submit">Login</button>
+                    <p id="loginResult" aria-live="polite"></p>
+                    <p><a href="register.html">Set up the admin account</a></p>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>&copy; <span data-current-year>2026</span> Mahalakshmi&nbsp; | My Portfolio</p>
+        </div>
+    </footer>
+
+</body>
+</html>
