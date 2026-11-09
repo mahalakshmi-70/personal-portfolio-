@@ -1,5 +1,7 @@
 const isLocalPage = window.location.protocol === "file:" ||
     ["localhost", "127.0.0.1"].includes(window.location.hostname);
+// Set window.OFFICIAL_API_BASE_URL before this script when the API is hosted
+// separately. Static-only hosts cannot run the Flask API.
 const API_BASE = window.OFFICIAL_API_BASE_URL ||
     (isLocalPage ? "http://127.0.0.1:5000" : window.location.origin);
 window.PORTFOLIO_API_BASE = API_BASE;
