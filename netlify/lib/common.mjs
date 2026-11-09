@@ -4,6 +4,25 @@ import { getStore } from "@netlify/blobs";
 export const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export const SESSION_TTL_SECONDS = 8 * 60 * 60;
 
+export function getEmailConfig() {
+  const user = process.env.SMTP_USER || process.env.SMTP_EMAIL || "";
+  const pass = process.env.SMTP_PASS || process.env.SMTP_APP_PASSWORD || "";
+  const port = Number(process.env.SMTP_PORT || 587);
+  const disabled = ["false", "0", "no"].includes((process.env.EMAIL_ENABLED || "").toLowerCase());
+  return {
+    enabled: !disabled && Boolean(user && pass && Number.isInteger(port) && port > 0 && port <= 65535),
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port,
+    secure: process.env.SMTP_SECURE
+      ? ["true", "1", "yes"].includes(process.env.SMTP_SECURE.toLowerCase())
+      : port === 465,
+    user,
+    pass,
+    from: process.env.SMTP_FROM || user,
+    to: process.env.RECEIVER_EMAIL || process.env.MAIL_TO || process.env.SMTP_FROM || user,
+  };
+}
+
 export function json(status, payload) {
   return new Response(JSON.stringify(payload), {
     status,

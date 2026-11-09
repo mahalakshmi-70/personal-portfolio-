@@ -64,7 +64,7 @@ if (contactForm instanceof HTMLFormElement && contactResult instanceof HTMLEleme
                 contactResult.textContent = data.message;
                 contactForm.reset();
             } else {
-                contactResult.textContent = data.error || "Failed to send message.";
+                contactResult.textContent = data.error || data.message || `Failed to send message (HTTP ${res.status}).`;
             }
         } catch (err) {
             contactResult.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE;

@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import nodemailer from "nodemailer";
-import { EMAIL_PATTERN, getStore, json, parseBody } from "../lib/common.mjs";
+import { EMAIL_PATTERN, getEmailConfig, getStore, json, parseBody } from "../lib/common.mjs";
 
 export default async function contact(request) {
   if (request.method !== "POST") return json(405, { success: false, error: "Method not allowed." });
@@ -26,18 +26,18 @@ export default async function contact(request) {
   await getStore("portfolio-messages").setJSON(id, entry);
 
   let emailSent = false;
-  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() !== "false" && process.env.EMAIL_ENABLED !== "0";
-  if (emailEnabled && process.env.SMTP_EMAIL && process.env.SMTP_APP_PASSWORD && process.env.RECEIVER_EMAIL) {
+  const smtp = getEmailConfig();
+  if (smtp.enabled && smtp.to) {
     try {
       const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: { user: process.env.SMTP_EMAIL, pass: process.env.SMTP_APP_PASSWORD },
+        host: smtp.host,
+        port: smtp.port,
+        secure: smtp.secure,
+        auth: { user: smtp.user, pass: smtp.pass },
       });
       await transporter.sendMail({
-        from: process.env.SMTP_EMAIL,
-        to: process.env.RECEIVER_EMAIL,
+        from: smtp.from,
+        to: smtp.to,
         replyTo: email,
         subject: "New Portfolio Contact Message",
         text: `New Portfolio Contact Message\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nMessage: ${message}`,
