@@ -1,9 +1,9 @@
-const crypto = require("node:crypto");
-const { EMAIL_PATTERN, getStore, hashPassword, json, parseBody, safeEqual } = require("../lib/common");
+import crypto from "node:crypto";
+import { EMAIL_PATTERN, getStore, hashPassword, json, parseBody, safeEqual } from "../lib/common.mjs";
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") return json(405, { success: false, error: "Method not allowed." });
-  const data = parseBody(event);
+export default async function register(request) {
+  if (request.method !== "POST") return json(405, { success: false, error: "Method not allowed." });
+  const data = await parseBody(request);
   if (!data || typeof data !== "object" || Array.isArray(data)) {
     return json(400, { success: false, error: "A JSON payload is required." });
   }
@@ -25,18 +25,17 @@ exports.handler = async (event) => {
     return json(403, { success: false, error: "A valid admin setup key is required." });
   }
 
-  const users = await getStore("portfolio-users");
+  const users = getStore("portfolio-users");
   const existing = await users.get("admin", { type: "json" });
   if (existing) {
     return json(409, { success: false, error: "Admin registration is closed. Sign in with the existing account." });
   }
 
-  const passwordFields = hashPassword(password);
   const user = {
     id: crypto.randomUUID(),
     name,
     email,
-    ...passwordFields,
+    ...hashPassword(password),
     createdAt: new Date().toISOString(),
   };
   const result = await users.setJSON("admin", user, { onlyIfNew: true });
@@ -44,4 +43,4 @@ exports.handler = async (event) => {
     return json(409, { success: false, error: "Admin registration is closed. Sign in with the existing account." });
   }
   return json(201, { success: true, message: "Admin account created." });
-};
+}

@@ -1,10 +1,10 @@
-const crypto = require("node:crypto");
-const nodemailer = require("nodemailer");
-const { EMAIL_PATTERN, getStore, json, parseBody } = require("../lib/common");
+import crypto from "node:crypto";
+import nodemailer from "nodemailer";
+import { EMAIL_PATTERN, getStore, json, parseBody } from "../lib/common.mjs";
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") return json(405, { success: false, error: "Method not allowed." });
-  const data = parseBody(event);
+export default async function contact(request) {
+  if (request.method !== "POST") return json(405, { success: false, error: "Method not allowed." });
+  const data = await parseBody(request);
   if (!data || typeof data !== "object" || Array.isArray(data)) {
     return json(400, { success: false, error: "A JSON payload is required." });
   }
@@ -23,8 +23,7 @@ exports.handler = async (event) => {
 
   const id = crypto.randomUUID();
   const entry = { id, name, email, phone, message, createdAt: new Date().toISOString() };
-  const store = await getStore("portfolio-messages");
-  await store.setJSON(id, entry);
+  await getStore("portfolio-messages").setJSON(id, entry);
 
   let emailSent = false;
   const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() !== "false" && process.env.EMAIL_ENABLED !== "0";
@@ -56,4 +55,4 @@ exports.handler = async (event) => {
       : "Your message was saved, but the email notification could not be sent.",
     emailSent,
   });
-};
+}
