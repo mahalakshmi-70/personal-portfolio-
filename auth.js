@@ -42,7 +42,7 @@
                 sessionStorage.setItem(tokenKey, data.token);
                 window.location.assign("admin.html");
             } catch {
-                result.textContent = "Could not connect to the Flask backend.";
+                result.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE || "Could not connect to the portfolio API.";
             }
         });
     }
@@ -92,7 +92,7 @@
                 result.textContent = "Admin account created. Redirecting to sign in...";
                 window.setTimeout(() => window.location.assign("login.html"), 1000);
             } catch {
-                result.textContent = "Could not connect to the Flask backend.";
+                result.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE || "Could not connect to the portfolio API.";
             }
         });
     }

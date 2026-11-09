@@ -5,6 +5,9 @@ const isLocalPage = window.location.protocol === "file:" ||
 const API_BASE = window.OFFICIAL_API_BASE_URL ||
     (isLocalPage ? "http://127.0.0.1:5000" : window.location.origin);
 window.PORTFOLIO_API_BASE = API_BASE;
+window.PORTFOLIO_API_UNAVAILABLE_MESSAGE = isLocalPage
+  ? `Backend not reachable. Start Flask at ${API_BASE} and refresh.`
+  : `Portfolio API not reachable at ${API_BASE}. Deploy the Flask API and configure window.OFFICIAL_API_BASE_URL.`;
 const contactForm = document.querySelector("#contactForm");
 const contactResult = document.querySelector("#result");
 const healthStatus = document.querySelector("#healthStatus");
@@ -33,7 +36,7 @@ if (contactResult instanceof HTMLElement) {
     })
     .catch(() => {
       if (healthStatus instanceof HTMLElement) {
-        healthStatus.textContent = `Backend not reachable. Start the Flask server at ${API_BASE} and refresh.`;
+        healthStatus.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE;
       }
     });
 }
@@ -65,7 +68,7 @@ if (contactForm instanceof HTMLFormElement && contactResult instanceof HTMLEleme
                 contactResult.textContent = data.error || "Failed to send message.";
             }
         } catch (err) {
-            contactResult.textContent = "Network error. Is the backend running?";
+            contactResult.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE;
         }
     });
 }
