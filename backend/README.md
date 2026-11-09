@@ -1,7 +1,6 @@
 # Portfolio backend
 
-The official portfolio uses the Flask backend in `app.py`. It serves the portfolio pages and provides the contact form and admin APIs on port `5000`.
-The older `server.js` and `personal-server.js` files are not used by the current start scripts.
+The official portfolio uses Flask in `app.py` for local development. On Netlify, JavaScript Functions provide the same API routes because Netlify does not run this Flask server directly. The older `server.js` and `personal-server.js` files are not used by the current start scripts.
 
 ## Run locally
 
@@ -11,17 +10,21 @@ From the `official` project folder, run `backend\start_server.bat`. It uses the 
 .venv\Scripts\python.exe -m pip install -r backend\requirements.txt
 ```
 
-Then open `http://127.0.0.1:5000`. The homepage, contact form, login, registration, and admin dashboard are served by Flask. For production, use a host that runs Python/Flask through a WSGI server. If the frontend and backend use different origins, add this before loading `script.js` and `auth.js` in each HTML page:
+Then open `http://127.0.0.1:5000`. The homepage, contact form, login, registration, and admin dashboard are served by Flask. If you host the frontend and a separate Flask API on different origins, add this before loading `script.js` and `auth.js` in each HTML page:
 
 ```html
 <script>window.OFFICIAL_API_BASE_URL = "https://api.example.com";</script>
 ```
 
-Replace the example with the public API origin. GitHub Pages is static hosting and cannot run this Flask backend, so its contact and admin APIs will not work there.
+Replace the example with the public API origin. This override is not needed for Netlify; its `/api/...` routes are rewritten to the Functions below.
 
-## Netlify static deployment
+## Netlify deployment
 
-The Netlify build publishes only the public pages and assets into `dist/`; it excludes the backend and private files. Netlify can host this static frontend, but it does not run this Flask app. Until the Flask API is deployed to a Python-capable host and `window.OFFICIAL_API_BASE_URL` is set to that API, contact submission, login, registration, and the admin dashboard will not work on the Netlify site.
+Netlify publishes the public pages and assets from `dist/` and deploys JavaScript API functions from `netlify/functions/`. Rewrites keep the existing `/api/...` URLs. Messages, the admin account, and login sessions use persistent Netlify Blobs stores.
+
+Before using contact email or creating the admin account, add these environment variables in Netlify under **Project configuration → Environment variables**: `SMTP_EMAIL`, `SMTP_APP_PASSWORD`, `RECEIVER_EMAIL`, and `ADMIN_SETUP_KEY`. Use a long random value for `ADMIN_SETUP_KEY`; enter the same value once on `/register.html` when creating the initial admin. Do not put these values in frontend files or commit a real `.env` file.
+
+The Blobs store is persistent across deploys. Netlify starts with an empty Blobs store; local `backend/data/users.json` and `messages.json` records are not automatically imported. The Netlify build uses the root `package.json` and runs `npm install` followed by `npm run build`.
 
 ## Admin setup
 

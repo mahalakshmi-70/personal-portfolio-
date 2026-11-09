@@ -1,13 +1,12 @@
 const isLocalPage = window.location.protocol === "file:" ||
     ["localhost", "127.0.0.1"].includes(window.location.hostname);
-// Set window.OFFICIAL_API_BASE_URL before this script when the API is hosted
-// separately. Static-only hosts cannot run the Flask API.
+// Netlify rewrites the existing /api routes to serverless functions.
 const API_BASE = window.OFFICIAL_API_BASE_URL ||
     (isLocalPage ? "http://127.0.0.1:5000" : window.location.origin);
 window.PORTFOLIO_API_BASE = API_BASE;
 window.PORTFOLIO_API_UNAVAILABLE_MESSAGE = isLocalPage
   ? `Backend not reachable. Start Flask at ${API_BASE} and refresh.`
-  : `Portfolio API not reachable at ${API_BASE}. Deploy the Flask API and configure window.OFFICIAL_API_BASE_URL.`;
+  : `Portfolio API is not reachable. Check the Netlify Functions deployment for this site.`;
 const contactForm = document.querySelector("#contactForm");
 const contactResult = document.querySelector("#result");
 const healthStatus = document.querySelector("#healthStatus");

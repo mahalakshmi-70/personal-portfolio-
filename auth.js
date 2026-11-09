@@ -65,7 +65,7 @@
                 }
             })
             .catch(() => {
-                info.textContent = "Could not check registration availability. Start the Flask backend and refresh.";
+                info.textContent = window.PORTFOLIO_API_UNAVAILABLE_MESSAGE || "Could not check registration availability.";
             });
 
         registerForm.addEventListener("submit", async (event) => {
