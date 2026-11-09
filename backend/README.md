@@ -19,6 +19,10 @@ Then open `http://127.0.0.1:5000`. The homepage, contact form, login, registrati
 
 Replace the example with the public API origin. GitHub Pages is static hosting and cannot run this Flask backend, so its contact and admin APIs will not work there.
 
+## Netlify static deployment
+
+The Netlify build publishes only the public pages and assets into `dist/`; it excludes the backend and private files. Netlify can host this static frontend, but it does not run this Flask app. Until the Flask API is deployed to a Python-capable host and `window.OFFICIAL_API_BASE_URL` is set to that API, contact submission, login, registration, and the admin dashboard will not work on the Netlify site.
+
 ## Admin setup
 
 Open `/register.html` to create the initial admin account. Without `ADMIN_SETUP_KEY`, the first account can only be created from the same machine as the backend. For a hosted deployment, configure a private `ADMIN_SETUP_KEY` and enter it during initial setup. Registration closes after that first account is created. Passwords are stored as scrypt hashes. Sign in at `/login.html` to open the dashboard at `/admin.html`; dashboard access uses a temporary bearer token held in the current browser session.
